@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Preparing Download...</title>
+
+<style>
+    body {
+        font-family: system-ui, -apple-system, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        background: #f4f6f8;
+        text-align: center;
+    }
+
+    .container {
+        max-width: 400px;
+    }
+
+    .spinner {
+        margin: 20px auto;
+        width: 40px;
+        height: 40px;
+        border: 4px solid #ddd;
+        border-top: 4px solid #333;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+        to { transform: rotate(360deg); }
+    }
+
+    a.manual-link {
+        display: none;
+        margin-top: 15px;
+    }
+</style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Your download will start shortly</h2>
+    <div class="spinner"></div>
+    <p>If it doesn’t start automatically, click below:</p>
+    <a id="manualDownload" class="manual-link" href="#" download>Download PDF</a>
+</div>
+
+<script>
+(() => {
+    'use strict';
+
+    const PDF_URL = "https://github.com/elpueblodechina/investigacion-radio-y-pensamiento-ecologico/blob/docs/Investigacion_Radio_Granizo-1_compressed.pdf"; // Replace with your raw GitHub PDF link
+    const DOWNLOAD_DELAY = 2000; // 2 seconds
+
+    const manualLink = document.getElementById('manualDownload');
+    manualLink.href = PDF_URL;
+    manualLink.style.display = 'inline-block';
+
+    const triggerDownload = () => {
+        try {
+            const link = document.createElement('a');
+            link.href = PDF_URL;
+            link.download = '';
+            link.style.display = 'none';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        } catch (error) {
+            console.error("Download failed:", error);
+            manualLink.style.display = 'inline-block';
+        }
+    };
+
+    window.addEventListener('load', () => {
+        setTimeout(triggerDownload, DOWNLOAD_DELAY);
+    });
+
+})();
+</script>
+
+</body>
+</html>
